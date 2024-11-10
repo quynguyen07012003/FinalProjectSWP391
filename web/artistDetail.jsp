@@ -73,7 +73,7 @@
     <jsp:include page="header.jsp" />
 
     <!-- Main Content -->
-    <main id="bringer-main" class="stg-container">
+    <main id="bringer-main" class="stg-container" style="margin: 20px auto;">
 
         <!-- Artist Profile Section -->
         <div class="stg-row">

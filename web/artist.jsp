@@ -23,6 +23,9 @@
         <!-- Favicon -->
         <link rel="icon" href="img/favicon.png" sizes="32x32">
     </head>
+    <style>
+        
+    </style>
     <body>
         <!-- Header -->
         <jsp:include page="header.jsp" />

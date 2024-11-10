@@ -1,11 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mạng Lưới Nghệ Sĩ Việt Nam - Đăng Ký</title>
+        <title>Vietnam Artist Network - Registration</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <style>
@@ -42,6 +42,7 @@
             }
         </style>
         <script>
+            // Function to show/hide role-specific sections
             function showRoleSection(role) {
                 document.getElementById('clientSection').style.display = 'none';
                 document.getElementById('artistSection').style.display = 'none';
@@ -61,9 +62,9 @@
         <div class="container">
             <div class="register-container">
                 <h2 class="text-center">Mạng Lưới Nghệ Sĩ Việt Nam</h2>
-                <p class="text-center text-danger">Vui lòng điền đầy đủ và chính xác các thông tin</p>
+                <p class="text-center text-danger">Vui lòng điền thông tin chính xác và đầy đủ</p>
 
-                <!-- Thông báo thành công hoặc lỗi -->
+                <!-- Hiển thị thông báo thành công hoặc lỗi -->
                 <c:if test="${not empty errorMessage}">
                     <div class="alert alert-danger" role="alert">
                         ${errorMessage}
@@ -77,38 +78,38 @@
                 </c:if>
 
                 <form action="register" method="POST">
-                    <!-- Chọn vai trò -->
+                    <!-- Lựa chọn vai trò -->
                     <div class="form-group text-center">
-                        <label class="font-weight-bold">Vai Trò:</label>
+                        <label class="font-weight-bold">Vai trò:</label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="role" id="clientRole" value="client" onclick="showRoleSection('client')">
-                            <label class="form-check-label" for="clientRole">Khách Hàng</label>
+                            <label class="form-check-label" for="clientRole">Khách hàng</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="role" id="artistRole" value="artist" onclick="showRoleSection('artist')">
-                            <label class="form-check-label" for="artistRole">Nghệ Sĩ</label>
+                            <label class="form-check-label" for="artistRole">Nghệ sĩ</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="role" id="agentRole" value="agent" onclick="showRoleSection('agent')">
-                            <label class="form-check-label" for="agentRole">Đại Lý</label>
+                            <label class="form-check-label" for="agentRole">Đại diện</label>
                         </div>
                     </div>
 
-                    <!-- Thông Tin Đăng Nhập -->
+                    <!-- Thông tin đăng nhập -->
                     <div class="form-section">
-                        <h5>Thông Tin Đăng Nhập</h5>
+                        <h5>Thông tin đăng nhập</h5>
                         <div class="form-group">
-                            <label for="username">Tên Đăng Nhập <span class="text-danger">*</span></label>
+                            <label for="username">Tên người dùng <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tên đăng nhập" required>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tên người dùng" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="password">Mật Khẩu <span class="text-danger">*</span></label>
+                                <label for="password">Mật khẩu <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
@@ -117,7 +118,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="confirmPassword">Xác Nhận Mật Khẩu <span class="text-danger">*</span></label>
+                                <label for="confirmPassword">Xác nhận mật khẩu <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
@@ -128,11 +129,11 @@
                         </div>
                     </div>
 
-                    <!-- Thông Tin Khách Hàng -->
+                    <!-- Phần Khách hàng -->
                     <div id="clientSection" class="role-section form-section">
-                        <h5>Thông Tin Khách Hàng</h5>
+                        <h5>Thông tin Khách hàng</h5>
                         <div class="form-group">
-                            <label for="clientName">Tên Khách Hàng <span class="text-danger">*</span></label>
+                            <label for="clientName">Tên khách hàng <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -141,7 +142,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="clientPhone">Số Điện Thoại <span class="text-danger">*</span></label>
+                            <label for="clientPhone">Số điện thoại <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -155,16 +156,16 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 </div>
-                                <input type="email" class="form-control" id="clientEmail" name="clientEmail" placeholder="Nhập email">
+                                <input type="email" class="form-control" id="clientEmail" name="clientEmail" placeholder="Nhập địa chỉ email">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Thông Tin Nghệ Sĩ -->
+                    <!-- Phần Nghệ sĩ -->
                     <div id="artistSection" class="role-section form-section">
-                        <h5>Thông Tin Nghệ Sĩ</h5>
+                        <h5>Thông tin Nghệ sĩ</h5>
                         <div class="form-group">
-                            <label for="artistName">Tên Nghệ Sĩ <span class="text-danger">*</span></label>
+                            <label for="artistName">Tên nghệ sĩ <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-microphone"></i></span>
@@ -173,16 +174,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="stageName">Tên Nghệ Danh</label>
+                            <label for="stageName">Tên sân khấu</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-microphone-alt"></i></span>
                                 </div>
-                                <input type="text" class="form-control" id="stageName" name="stageName" placeholder="Nhập tên nghệ danh (nếu có)">
+                                <input type="text" class="form-control" id="stageName" name="stageName" placeholder="Nhập tên sân khấu (nếu có)">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="artistPhone">Số Điện Thoại <span class="text-danger">*</span></label>
+                            <label for="artistPhone">Số điện thoại <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -196,52 +197,46 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 </div>
-                                <input type="email" class="form-control" id="artistEmail" name="artistEmail" placeholder="Nhập email">
+                                <input type="email" class="form-control" id="artistEmail" name="artistEmail" placeholder="Nhập địa chỉ email">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="artistGenre">Thể Loại Âm Nhạc</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-music"></i></span>
-                                </div>
-                                <input type="text" class="form-control" id="artistGenre" name="artistGenre" placeholder="Nhập thể loại âm nhạc">
-                            </div>
+                            <label for="agentSelect">Chọn Đại diện</label>
+                            <select class="form-control" id="agentSelect" name="agentID">
+                                <option value="">Chọn Đại diện</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="artistBio">Tiểu Sử</label>
+                            <label for="genreSelect">Chọn thể loại</label>
+                            <select class="form-control" id="genreSelect" name="genreID">
+                                <option value="">Chọn thể loại</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="artistBio">Tiểu sử</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-book"></i></span>
                                 </div>
-                                <textarea class="form-control" id="artistBio" name="artistBio" placeholder="Nhập tiểu sử của nghệ sĩ"></textarea>
+                                <textarea class="form-control" id="artistBio" name="artistBio" placeholder="Nhập tiểu sử nghệ sĩ"></textarea>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Thông Tin Đại Lý -->
+                    <!-- Phần Đại diện -->
                     <div id="agentSection" class="role-section form-section">
-                        <h5>Thông Tin Đại Lý</h5>
+                        <h5>Thông tin Đại diện</h5>
                         <div class="form-group">
-                            <label for="agentName">Tên Đại Lý <span class="text-danger">*</span></label>
+                            <label for="agentName">Tên công ty <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-building"></i></span>
                                 </div>
-                                <input type="text" class="form-control" id="agentName" name="agentName" placeholder="Nhập tên đại lý">
+                                <input type="text" class="form-control" id="agentName" name="agentName" placeholder="Nhập tên công ty">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="company">Tên Công Ty</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-building"></i></span>
-                                </div>
-                                <input type="text" class="form-control" id="company" name="company" placeholder="Nhập tên công ty">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="agentPhone">Số Điện Thoại <span class="text-danger">*</span></label>
+                            <label for="agentPhone">Số điện thoại <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -255,27 +250,81 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 </div>
-                                <input type="email" class="form-control" id="agentEmail" name="agentEmail" placeholder="Nhập email">
+                                <input type="email" class="form-control" id="agentEmail" name="agentEmail" placeholder="Nhập địa chỉ email">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="agentAddress">Địa Chỉ</label>
+                            <label for="companySelect">Chọn công ty</label>
+                            <select class="form-control" id="companySelect" name="companyID">
+                                <option value="">Chọn công ty</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="agentAddress">Địa chỉ</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                                 </div>
-                                <input type="text" class="form-control" id="agentAddress" name="agentAddress" placeholder="Nhập địa chỉ">
+                                <input type="text" class="form-control" id="agentAddress" name="agentAddress" placeholder="Enter address">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Khu vực nút gửi -->
-                    <div class="btn-group text-center">
-                        <button type="button" class="btn btn-warning" onclick="window.location.href='logingg.jsp'">Đăng Nhập</button>
-                        <button type="submit" class="btn btn-primary">Đăng Ký</button>
+                    <!-- Nút đăng ký -->
+                    <div class="text-center mt-4">
+                        <button type="button" class="btn btn-warning" onclick="window.location.href = 'logingg.jsp'">Đăng nhập</button>
+                        <button type="submit" class="btn btn-primary">Đăng ký</button>
                     </div>
                 </form>
             </div>
         </div>
+
+
+
+        <script>
+            fetch('getAgents')
+                    .then(response => response.json())
+                    .then(data => {
+                        const agentSelect = document.getElementById('agentSelect');
+                        data.forEach(agent => {
+                            const option = document.createElement('option');
+                            option.value = agent.agentID;
+                            option.textContent = agent.agentName + " - " + agent.phoneNumber;
+                            agentSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching agents:', error));
+        </script>
+
+        <script>
+            fetch('getCompanies')
+                    .then(response => response.json())
+                    .then(data => {
+                        const companySelect = document.getElementById('companySelect');
+                        data.forEach(company => {
+                            const option = document.createElement('option');
+                            option.value = company.companyID;
+                            option.textContent = company.companyName + " - " + company.phoneNumber;
+                            companySelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching companies:', error));
+        </script>
+
+        <script>
+            fetch('getGenre')
+                    .then(response => response.json())
+                    .then(data => {
+                        const genreSelect = document.getElementById('genreSelect');
+                        data.forEach(genre => {
+                            const option = document.createElement('option');
+                            option.value = genre.genreID;
+                            option.textContent = genre.genreName;
+                            genreSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching genre:', error));
+        </script>
+
     </body>
 </html>

@@ -23,14 +23,12 @@ import util.StringEncoderDecoder;
 @WebServlet(name = "SignUp", urlPatterns = {"/register"})
 public class SignUp extends HttpServlet {
 
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
     }
 
- 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -76,15 +74,16 @@ public class SignUp extends HttpServlet {
 
             // Thêm người dùng chung vào bảng User
             String passw = "";
-                try {
-                    passw = MD5Encryptor.usingMd5(password);
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (UnsupportedEncodingException ex) {
-                    Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            try {
+                passw = MD5Encryptor.usingMd5(password);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+            }
             int userId = dao.addUser(username, passw, userEmail, username, getRoleId(role));
-
+            String id = String.valueOf(userId);
+            
             // Xử lý theo vai trò người dùng
             switch (role) {
                 case "client":
@@ -97,12 +96,12 @@ public class SignUp extends HttpServlet {
                     String artistName = request.getParameter("artistName");
                     String stageName = request.getParameter("stageName");
                     String artistPhone = request.getParameter("artistPhone");
-                    String artistGenreID =  request.getParameter("genreID");
+                    String artistGenreID = request.getParameter("genreID");
                     String artistBio = request.getParameter("artistBio");
                     String agentId = request.getParameter("agentID");
-                    dao.addArtist(artistName, stageName, artistPhone, artistEmail , artistBio, userId);
-                    
-                    genreDAO.addArtistGenre(artistGenreID,dao.getArtistID(artistEmail));
+                    dao.addArtist(artistName, stageName, artistPhone, artistEmail, artistBio, id, agentId);
+
+                    genreDAO.addArtistGenre(artistGenreID, dao.getArtistID(artistEmail));
                     request.setAttribute("successMessage", "Artist registered successfully!");
                     break;
                 case "agent":
@@ -113,14 +112,14 @@ public class SignUp extends HttpServlet {
                     dao.addAgent(agentName, agentPhone, agentEmail, agentAddress, userId, companyID);
                     request.setAttribute("successMessage", "Agent registered successfully!");
                     break;
-                    
+
                 default:
                     request.setAttribute("errorMessage", "Invalid role selected.");
                     request.getRequestDispatcher("signup.jsp").forward(request, response);
                     return;
             }
             String contextPath = request.getContextPath();
-            String verificationLink = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + contextPath + "/verify?id=" + StringEncoderDecoder.encode(userId+"");
+            String verificationLink = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + contextPath + "/verify?id=" + StringEncoderDecoder.encode(userId + "");
 
             EmailSender.sendEmail(userEmail, "Verify account click to link", verificationLink);
 
@@ -128,7 +127,6 @@ public class SignUp extends HttpServlet {
             request.getRequestDispatcher("waitting.jsp").forward(request, response);
 
             // Chuyển hướng đến trang thành công sau khi đăng ký
-
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "An error occurred during registration.");
@@ -136,7 +134,7 @@ public class SignUp extends HttpServlet {
         }
 
     }
-    
+
     private int getRoleId(String role) {
         switch (role) {
             case "client":

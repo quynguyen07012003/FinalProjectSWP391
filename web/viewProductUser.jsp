@@ -67,32 +67,49 @@
                 margin: 5px 0;
             }
 
+            .product-info {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+
+            .product-image img {
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin: 10px;
+            }
+
+            .product-name {
+                font-size: 1.1rem;
+                font-weight: bold;
+                color: #333;
+                text-align: center;
+            }
+
+            .product-purchase {
+                display: flex;
+                justify-content: flex-start; /* căn trái */
+                gap: 10px;
+            }
+
             .price-tag {
                 font-size: 1.1rem;
                 font-weight: bold;
-                color: #28a745;
-                margin-top: 10px;
-                margin: 10px 0;
-                text-align: left;
-            }
-
-
-            .product-info {
-                font-size: 0.9rem;
-                color: #cccccc;
-                margin: 5px 0;
+                color:#838383;
+                margin: 0;
+                line-height: 40px;
+                justify-content: left;
             }
 
             .btn-success {
-                background-color: transparent;
-                color: #007bff;
-                border: none;
-                font-size: 1.5rem;
-                cursor: pointer;
-                transition: color 0.3s ease;
-                position: absolute;
-                bottom: 20px;
-                right: 20px;
+                padding: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: right;
+                line-height: 40px;
             }
 
             .btn-success:hover {
@@ -214,28 +231,29 @@
                      data-stagger-unload="fade-up">
 
                     <c:forEach var="product" items="${products}">
-                        <!-- Chỉ hiển thị sản phẩm nếu isActive là true -->
                         <c:if test="${product.isActive}">
                             <div class="bringer-block bringer-portfolio-card product-card">
-                                <!-- Display product image -->
-                                <div class="product-image">
-                                    <img src="${product.productImage}" alt="${product.productName}" class="img-fluid" />
-                                </div>
-                                <div class="bringer-portfolio-card-footer">
-                                    <div class="bringer-portfolio-card-title">
-                                        <span class="bringer-meta" style="margin-left: 10px;">${product.productName}</span>
-                                        <p class="price-tag" style="margin-top: 30px; margin-left: 10px;">
-                                            <fmt:formatNumber value="${product.price}" type="number" maxFractionDigits="0"/>&#8363;
-                                        </p>
+                                <div class="product-info">
+                                    <div class="product-image">
+                                        <img src="${product.productImage}" alt="${product.productName}" class="img-fluid" />
                                     </div>
-                                    <a href="javascript:void(0);" class="btn btn-success mt-2" onclick="addToCart(${product.productID})">
+                                    <div class="product-name">
+                                        <span class="bringer-meta">${product.productName}</span>
+                                    </div>
+                                </div>
+
+                                <div class="product-purchase">
+                                    <p class="price-tag">
+                                        <fmt:formatNumber value="${product.price}" type="number" maxFractionDigits="0"/>&#8363;
+                                    </p>
+                                    <a href="javascript:void(0);" class="btn btn-success" onclick="addToCart(${product.productID})">
                                         <i class="fa fa-shopping-cart"></i>
                                     </a>
-
                                 </div>
                             </div>
                         </c:if>
                     </c:forEach>
+
                 </div>
                 <div>
                     <nav aria-label="Page navigation">

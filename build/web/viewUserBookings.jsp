@@ -1,31 +1,31 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Page Title -->
-        <title>Your Bookings</title>
+        <!-- Tiêu đề trang -->
+        <title>Các Đặt Chỗ Của Bạn</title>
 
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet">
-        <!-- Config -->
+        <!-- Cấu hình -->
         <link type="text/css" rel="stylesheet" href="css/config.css">
-        <!-- Libraries -->
+        <!-- Thư viện -->
         <link type="text/css" rel="stylesheet" href="css/libs.css">
-        <!-- Template Styles -->
+        <!-- Styles Mẫu -->
         <link type="text/css" rel="stylesheet" href="css/style.css">
         <!-- Responsive -->
         <link type="text/css" rel="stylesheet" href="css/responsive.css">
 
         <!-- Favicon -->
         <link rel="icon" href="img/favicon.png" sizes="32x32">
-        <!-- Custom Styles -->
+        <!-- Styles Tùy Chỉnh -->
         <style>
             .booking-card {
                 background-color: #ffffff;
@@ -43,7 +43,7 @@
             .booking-header {
                 font-size: 1.5rem;
                 font-weight: 700;
-                color: #343a40; /* Đổi màu thành đen đậm */
+                color: #343a40; /* Màu đen đậm */
             }
             .booking-details {
                 margin-top: 10px;
@@ -51,13 +51,13 @@
                 color: #495057; /* Màu xám đậm */
             }
             .status-pending {
-                color: #ffca2c; /* Màu vàng đậm hơn cho "Pending" */
+                color: #ffca2c; /* Màu vàng đậm cho "Chờ xử lý" */
             }
             .status-confirmed {
-                color: #198754; /* Màu xanh đậm hơn cho "Confirmed" */
+                color: #198754; /* Màu xanh đậm cho "Đã xác nhận" */
             }
             .status-canceled {
-                color: #dc3545; /* Giữ màu đỏ cho "Canceled" */
+                color: #dc3545; /* Màu đỏ cho "Đã hủy" */
             }
             .btn-primary {
                 margin-top: 20px;
@@ -74,35 +74,35 @@
     <body>
         <jsp:include page="header.jsp" />
 
-        <!-- Page Main -->
+        <!-- Phần chính trang -->
         <main id="bringer-main">
             <div class="stg-container">
-                <!-- Section: Page Title -->
+                <!-- Phần: Tiêu đề trang -->
                 <section class="backlight-bottom">
                     <div class="stg-row">
                         <div class="stg-col-6 stg-offset-3">
                             <div class="align-center">
-                                <h1 class="bringer-page-title" data-appear="fade-up" data-unload="fade-up">ARTISTS IN COMPANY</h1>
-                                <p class="bringer-large-text" data-appear="fade-up" data-delay="100" data-unload="fade-up">Discover Talented Artists</p>
+                                <h1 class="bringer-page-title" data-appear="fade-up" data-unload="fade-up">CÁC NGHỆ SĨ CỦA CÔNG TY</h1>
+                                <p class="bringer-large-text" data-appear="fade-up" data-delay="100" data-unload="fade-up">Khám Phá Các Nghệ Sĩ Tài Năng</p>
                             </div>
                         </div>
                     </div>
                 </section>
                 <div class="container">
-                    <h1 class="text-center my-4">Your Bookings</h1>
+                    <h1 class="text-center my-4">Các Đặt Chỗ Của Bạn</h1>
 
                     <c:forEach var="booking" items="${bookings}">
                         <div class="booking-card">
                             <div class="booking-header">
-                                Booking ID: ${booking.bookingID}
+                                Mã Đặt Chỗ: ${booking.bookingID}
                             </div>
                             <div class="booking-details">
-                                <p>Artist ID: ${booking.artistID}</p>
-                                <p>Booking Date: ${booking.bookingDate}</p>
-                                <p>Name book: ${booking.user.fullname}<p>
-                                <p>Email book: ${booking.user.email}<p>
-                                <p>Artist Name: ${booking.artist.artistName}<p>
-                                <p>Status:
+                                <p>Mã Nghệ Sĩ: ${booking.artistID}</p>
+                                <p>Ngày Đặt: ${booking.bookingDate}</p>
+                                <p>Tên người đặt: ${booking.user.fullname}</p>
+                                <p>Email người đặt: ${booking.user.email}</p>
+                                <p>Tên Nghệ Sĩ: ${booking.artist.artistName}</p>
+                                <p>Trạng Thái:
                                     <span class="status-${booking.status.toLowerCase()}">${booking.status}</span>
                                 </p>
                             </div>
@@ -110,14 +110,14 @@
                     </c:forEach>
 
                     <div class="text-center">
-                        <a href="company" class="btn btn-primary">Book Another Artist</a>
+                        <a href="company" class="btn btn-primary">Đặt Nghệ Sĩ Khác</a>
                     </div>
                 </div>
             </div>
             <jsp:include page="footer.jsp" />
         </main>
 
-        <!-- Dynamic Backlight -->
+        <!-- Ánh sáng nền động -->
         <div class="bringer-backlight"></div>
 
         <!-- JS Scripts -->

@@ -9,28 +9,28 @@ import java.util.List;
 public class UserDAO extends DBContext {
 
     public boolean updatePasswordByEmail(String email, String newPassword) {
-      
-        
-        String query = "UPDATE [dbo].[User]\n" +
-"   SET \n" +
-"      [PasswordHash] = ? \n" +
-"    \n" +
-" WHERE Email = ?";
-        
+
+        String query = "UPDATE [dbo].[User]\n"
+                + "   SET \n"
+                + "      [PasswordHash] = ? \n"
+                + "    \n"
+                + " WHERE Email = ?";
+
         try (
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
-            
+                PreparedStatement pstmt = connection.prepareStatement(query)) {
+
             pstmt.setString(1, newPassword);  // Lưu mật khẩu mã hóa vào cơ sở dữ liệu
             pstmt.setString(2, email);
-            
+
             int rowsUpdated = pstmt.executeUpdate();
             return rowsUpdated > 0;
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
+
     // Phương thức kiểm tra email đã tồn tại hay chưa
     public boolean isEmailExist(String email) {
         String sql = "SELECT COUNT(*) FROM [User] WHERE Email = ?";
@@ -49,20 +49,21 @@ public class UserDAO extends DBContext {
     }
 
     // Phương thức lưu người dùng Google (chỉ khi email chưa tồn tại)
-    public void saveUserLogingg(Account acc) {
+    public void saveUserLogingg(String email, String fullName, boolean is_verified, String roleID) {
         // Kiểm tra xem email đã tồn tại hay chưa
-        if (isEmailExist(acc.getEmail())) {
+        if (isEmailExist(email)) {
             System.out.println("Email đã tồn tại, không lưu lại.");
-            return; // Nếu email đã tồn tại, không lưu lại nữa
+            return; 
         }
 
         // Nếu email chưa tồn tại, tiếp tục lưu thông tin người dùng mới
-        String sql = "INSERT INTO [User](Email, FullName, is_verified, RoleID) VALUES (?, ?, ?, 2)";
+        String sql = "INSERT INTO [User](Email, FullName, is_verified, RoleID) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, acc.getEmail());
-            pre.setString(2, acc.getFullname());
-            pre.setBoolean(3, acc.isVerified_email());
+            pre.setString(1, email);
+            pre.setString(2, fullName);
+            pre.setBoolean(3, is_verified);
+            pre.setString(4, roleID);
             pre.executeUpdate();
             System.out.println("Lưu thông tin người dùng thành công!");
         } catch (SQLException e) {
@@ -83,20 +84,20 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
-    
+
     public int getUserIDByEmail(String email) {
-    String sql = "SELECT UserID FROM [User] WHERE Email = ?";
-    try (PreparedStatement pre = connection.prepareStatement(sql)) {
-        pre.setString(1, email);
-        ResultSet rs = pre.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("UserID"); // Trả về userID tương ứng
+        String sql = "SELECT UserID FROM [User] WHERE Email = ?";
+        try (PreparedStatement pre = connection.prepareStatement(sql)) {
+            pre.setString(1, email);
+            ResultSet rs = pre.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("UserID"); // Trả về userID tương ứng
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return -1; // Trả về -1 nếu không tìm thấy
     }
-    return -1; // Trả về -1 nếu không tìm thấy
-}
 
     // Thêm người dùng mới vào bảng User
     public int addUser(String username, String passwordHash, String email, String fullName, int roleID) throws SQLException {
@@ -117,7 +118,7 @@ public class UserDAO extends DBContext {
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    return generatedKeys.getInt(1);  // Trả về userID vừa được tạo
+                    return generatedKeys.getInt(1);  
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
@@ -142,34 +143,33 @@ public class UserDAO extends DBContext {
             throw new SQLException("Error adding client: " + e.getMessage(), e);
         }
     }
-    
 
-    // Thêm thông tin artist vào bảng Artist
-  public void addArtist(String artistName, String stageName, String phoneNumber, String email, String bio, int userID) throws SQLException {
-        String sql = "INSERT INTO [Artist] (ArtistName, StageName, PhoneNumber, Email, Bio, UserID, CreatedAt) "
-                + "VALUES (?, ?, ?, ?, ?, ?, GETDATE())";
+    public void addArtist(String artistName, String stageName, String phoneNumber, String email,  String bio, String userID, String agentId) throws SQLException {
+        String sql = "INSERT INTO [Artist] (ArtistName, StageName, PhoneNumber, Email, Bio, UserID,AgencyID, CreatedAt) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, GETDATE())";
         try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, artistName);
             stmt.setString(2, stageName);
             stmt.setString(3, phoneNumber);
             stmt.setString(4, email);
-//            stmt.setString(5, genre);
             stmt.setString(5, bio);
-            stmt.setInt(6, userID);
+            stmt.setString(6, userID);
+            stmt.setString(7, agentId);
 
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException("Error adding artist: " + e.getMessage(), e);
         }
     }
-  public int getArtistID(String email) {
+
+    public int getArtistID(String email) {
         int artistID = -1;  // Giá trị mặc định nếu không tìm thấy artist
 
-        String query = "SELECT [ArtistID]\n" +
-"     \n" +
-"  FROM [dbo].[Artist] where Email = (?)";
+        String query = "SELECT [ArtistID]\n"
+                + "     \n"
+                + "  FROM [dbo].[Artist] where Email = (?)";
 
-       try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
 
@@ -184,10 +184,10 @@ public class UserDAO extends DBContext {
     }
 
     // Thêm thông tin agent vào bảng Agent
-  public void addAgent(String agentName, String phoneNumber, String email, String address, int userID, String companyId) throws SQLException {
+    public void addAgent(String agentName, String phoneNumber, String email, String address, int userID, String companyId) throws SQLException {
         String sql = "INSERT INTO [Agent] (AgentName, PhoneNumber, Email, Address, UserID, companyId,CreatedAt) "
                 + "VALUES (?, ?, ?, ?, ?, ?,GETDATE())";
-        try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, agentName);
             stmt.setString(2, phoneNumber);
             stmt.setString(3, email);

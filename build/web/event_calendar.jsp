@@ -111,7 +111,6 @@
 
         <nav class="navbar">
             <a href="home.jsp">Trang Chủ</a>
-            <a href="ArtistMangeController">Nghệ Sĩ</a>
             <a href="BookController">Đặt Lịch</a>
             <a href="manage-new">Tin Tức</a>
             <a href="event_calendar.jsp">Lịch Sự Kiện</a>

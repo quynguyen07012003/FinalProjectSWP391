@@ -1,4 +1,3 @@
-
 package controller;
 
 import DAO.ClientDAO;
@@ -12,9 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-/**
- *
- */
 public class LoginGGServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -24,10 +20,13 @@ public class LoginGGServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
         String code = request.getParameter("code");
         GoogleLogin gg = new GoogleLogin();
         String accessToken = gg.getToken(code);
         Account acc = gg.getUserInfo(accessToken);
+        acc.setRole("2");
         System.out.println(acc);
         UserDAO udao = new UserDAO();
         ClientDAO cdao = new ClientDAO();
@@ -37,13 +36,12 @@ public class LoginGGServlet extends HttpServlet {
 
             if (cdao.getClientByUserID(acc.getEmail()) == null) {
                 cdao.addClient("", "", "", acc.getEmail(), "", userID);
+                udao.saveUserLogingg(acc.getEmail(), acc.getFullname(), acc.isVerified_email(),acc.getRole());
                 System.out.println("Thông tin Client đã được thêm vào cơ sở dữ liệu.");
             } else {
                 System.out.println("Client đã tồn tại trong cơ sở dữ liệu.");
             }
 
-            // Đặt thuộc tính phiên
-            HttpSession session = request.getSession();
             session.setAttribute("acc", acc);
             System.out.println("Quá trình đăng nhập hoàn tất.");
         } catch (Exception e) {

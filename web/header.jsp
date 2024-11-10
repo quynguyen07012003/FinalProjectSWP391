@@ -121,9 +121,8 @@
                                 <li><a href="cart">Xem Giỏ Hàng</a></li>
                                 </c:if>
                                 <c:if test="${sessionScope.acc != null && sessionScope.acc.role == 3}">
-                                <li><a href="BookController?action=manageBookings">Quản Lý Đặt Lịch</a></li>
-                                <li><a href="event_calendar.jsp">Quản Lý Lịch Trình</a></li>
-                                </c:if>
+                                <a href="BookController">Quản Lí</a>
+                            </c:if>
                         </ul>
                     </nav>
                 </div>
@@ -131,15 +130,13 @@
                 <div class="bringer-header-rp">
                     <c:choose>
                         <c:when test="${empty sessionScope.acc}">
-                            <!-- Hiển thị nút đăng nhập và đăng ký khi chưa đăng nhập -->
                             <a style="margin-right: 10px;" href="logingg.jsp" class="bringer-button">Đăng Nhập</a>
                             <a href="signup.jsp" class="bringer-button">Đăng Ký</a>
                         </c:when>
                         <c:otherwise>
-                            <!-- Hiển thị menu hồ sơ khi đã đăng nhập -->
                             <div class="profile-dropdown">
                                 <button class="bringer-button" id="profileButton">
-                                    Hồ Sơ <!-- Hiển thị tên người dùng -->
+                                    Hồ Sơ 
                                 </button>
                                 <div class="profile-dropdown-content">
                                     <c:if test="${sessionScope.acc != null && sessionScope.acc.role == 2}">

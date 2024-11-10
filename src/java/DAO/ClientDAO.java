@@ -33,6 +33,22 @@ public class ClientDAO extends DBContext {
     }
 
     public void addClient(String clientName, String contactPerson, String phoneNumber, String email, String address, int userID) throws SQLException {
+        // SQL kiểm tra sự tồn tại của email
+//        String checkEmailSql = "SELECT COUNT(*) FROM [Client] WHERE Email = ?";
+//        try (PreparedStatement checkStmt = connection.prepareStatement(checkEmailSql)) {
+//            checkStmt.setString(1, email);
+//            try (ResultSet rs = checkStmt.executeQuery()) {
+//                if (rs.next() && rs.getInt(1) > 0) {
+//                    System.out.println("Email đã tồn tại, không thể thêm Client mới.");
+//                    return;
+//                }
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Lỗi khi kiểm tra email: " + e.getMessage());
+//            throw e;
+//        }
+
+        // SQL thêm khách hàng mới nếu email chưa tồn tại
         String sql = "INSERT INTO [Client] (ClientName, ContactPerson, PhoneNumber, Email, Address, UserID, CreatedAt) VALUES (?, ?, ?, ?, ?, ?, GETDATE())";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, clientName);
